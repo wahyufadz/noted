@@ -10,7 +10,6 @@ class NoteSchema extends Schema {
       table.string('title', 254).notNullable()
       table.text('content')
       table.integer('user_id').unsigned().references('id').inTable('users')
-      ///.text('user_id').references('id').inTable('')
       table.timestamps()
     })
   }
