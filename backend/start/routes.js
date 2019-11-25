@@ -21,5 +21,7 @@ Route.get('/', () => {
 })
 
 Route.group(() => {
-  Route.get('test', "test")   // GET /api/v1/users
+  Route.get('test', () => {
+    return { greeting: 'Hello world in JSON' }// GET /api/v1/users
+  })
 }).prefix('api/v1')
