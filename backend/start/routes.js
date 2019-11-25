@@ -24,4 +24,7 @@ Route.group(() => {
   Route.get('test', () => {
     return { greeting: 'Hello world in JSON' }// GET /api/v1/users
   })
+
+  Route.resource('notes', 'NoteController')
+
 }).prefix('api/v1')
