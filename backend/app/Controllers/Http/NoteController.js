@@ -1,4 +1,5 @@
 'use strict'
+const Note = use('App/Models/Note')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -17,19 +18,10 @@ class NoteController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-  }
-
-  /**
-   * Render a form to be used for creating a new note.
-   * GET notes/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async index({ request, response, view }) {
+    response.send({
+      data: await Note.all()
+    })
   }
 
   /**
@@ -40,7 +32,27 @@ class NoteController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store({ request, response }) {
+    if (!request.all().hasOwnProperty('title')) {
+      return response.send({
+        message: 'Title field is required'
+      })
+    }
+
+    const
+      newNote = new Note(),
+      { title, content } = request.all()
+
+    newNote.title = title
+    newNote.content = content
+
+    await newNote.save()
+
+    return response.send({
+      message: 'data saved',
+      data: newNote
+    })
+
   }
 
   /**
@@ -52,19 +64,16 @@ class NoteController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
+  async show({ params, request, response, view }) {
+    const { id } = params,
+      note = await Note.find(id),
+      message = note ? 'data found' : 'data not found'
 
-  /**
-   * Render a form to update an existing note.
-   * GET notes/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+    return response.send({
+      message: message,
+      data: note
+    })
+
   }
 
   /**
@@ -75,7 +84,33 @@ class NoteController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update({ params, request, response }) {
+    if (!request.all().hasOwnProperty('title')) {
+      return response.send({
+        message: 'Title field is required'
+      })
+    }
+
+    const { id } = params,
+      note = await Note.find(id)
+
+    if (!note) {
+      return response.send({
+        message: 'data not found',
+        data: note
+      })
+    }
+
+    const { title, content } = request.all()
+    note.title = title
+    note.content = content
+    note.save()
+
+    return response.send({
+      message: 'data updated',
+      data: note
+    })
+
   }
 
   /**
@@ -86,7 +121,19 @@ class NoteController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy({ params, request, response }) {
+    const { id } = params,
+      note = await Note.find(id)
+
+    if (!note) {
+      return response.send({
+        message: 'data not found',
+      })
+    }
+    await user.delete()
+    return request.send({
+      message: 'data deleted',
+    })
   }
 }
 
