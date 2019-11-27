@@ -1,13 +1,11 @@
 <template>
   <div class="hello">
-    <!-- <h1>{{ lists }}</h1> -->
-    <ol class="list-decimal">
+    <ol>
       <li v-for="list in lists" :key="list.id">
         <h3>{{ list.title }}</h3>
         <p>{{ list.content }}</p>
       </li>
     </ol>
-    <h1>{{ errors }}</h1>
   </div>
 </template>
 
