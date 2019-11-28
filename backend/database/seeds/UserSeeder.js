@@ -12,13 +12,13 @@
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
-const Hash = use('Hash')
+const User = use('App/Models/User')
 
 Factory.blueprint('App/Models/User', async (faker) => {
   return {
     username: faker.username(),
     email: faker.email(),
-    password: await Hash.make('secret')
+    password: 'secret'
   }
 })
 
@@ -28,7 +28,7 @@ class UserSeeder {
     const u1 = new User()
     u1.username = 'usersatu'
     u1.email = 'u1@mail.com'
-    u1.password = await Hash.make('admin')
+    u1.password = 'admin'
     await u1.save()
 
     //create 30 random user

@@ -31,12 +31,12 @@ module.exports = {
       "basePath": "/api/v1",
       "tags": [
         {
+          "name": "auth",
+          "description": "Authentication for user"
+        },
+        {
           "name": "note",
-          "description": "Everything about your Note",
-          "externalDocs": {
-            "description": "Find out more",
-            "url": "http://swagger.io"
-          }
+          "description": "Everything about your Note"
         }
       ],
 
