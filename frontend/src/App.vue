@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="bg-teal-100">
     <Todo/>
   </div>
 </template>

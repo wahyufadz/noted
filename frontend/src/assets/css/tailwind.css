@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
+
+.btn-primary {
+    @apply px-5 py-2 bg-teal-400 text-white rounded;
+}
+.btn-primary:hover {
+    @apply bg-teal-500;
+}
+
+.btn-disabled {
+    @apply px-5 py-2 text-gray-600 border-solid border-2 rounded cursor-not-allowed;
+}
+
+.btn-delete {
+    @apply px-5 py-2 text-white rounded bg-red-400;
+}
+.btn-delete:hover {
+    @apply bg-red-500
+}
+
+input {
+    @apply border-solid border-2 rounded-full p-1 w-full;
+}
+
 @tailwind utilities;
+
+h1 {
+    @apply text-2xl;
+}
+h2 {
+    @apply text-xl;
+}
+h3 {
+    @apply text-lg;
+}
