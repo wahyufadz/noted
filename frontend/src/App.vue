@@ -1,5 +1,8 @@
 <template>
-  <div id="app" class="bg-teal-100">
+  <div id="app"  class="container mx-auto py-20">
+    <div class="p-5 shadow-md bg-teal-400 text-center text-white mb-5 rounded-sm">
+        <h1>Noted TodoList</h1>
+    </div>
     <Todo/>
   </div>
 </template>

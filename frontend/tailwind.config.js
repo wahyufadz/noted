@@ -417,9 +417,27 @@ module.exports = {
       '40': '40',
       '50': '50',
     },
+    customForms: theme => ({
+        default: {
+            checkbox: {
+                icon: iconColor => `<svg fill="${iconColor}" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" ><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"/></svg>`,
+                iconColor: theme('colors.white'),
+                fontSize: 30,
+                margin: 5,
+                borderRadius: 25,
+                '&:hover': {
+                  backgroundColor: theme('colors.teal.300'),
+                },
+                '&:checked': {
+                    backgroundColor: theme('colors.teal.400'),
+                },
+            },
+        },
+    })
   },
+
   variants: {
-    accessibility: ['responsive', 'focus'],
+accessibility: ['responsive', 'focus'],
     alignContent: ['responsive'],
     alignItems: ['responsive'],
     alignSelf: ['responsive'],
@@ -487,5 +505,7 @@ module.exports = {
     zIndex: ['responsive'],
   },
   corePlugins: {},
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/custom-forms'),
+  ],
 }
