@@ -19,7 +19,7 @@ class NoteController {
    * @param {View} ctx.view
    */
   async index({ request, response, view }) {
-    response.send({
+    response.json({
       data: await Note.all()
     })
   }
@@ -34,7 +34,7 @@ class NoteController {
    */
   async store({ request, response }) {
     if (!request.all().hasOwnProperty('title')) {
-      return response.send({
+      return response.json({
         message: 'Title field is required'
       })
     }
@@ -48,7 +48,7 @@ class NoteController {
 
     await newNote.save()
 
-    return response.send({
+    return response.json({
       message: 'data saved',
       data: newNote
     })
@@ -69,7 +69,7 @@ class NoteController {
       note = await Note.find(id),
       message = note ? 'data found' : 'data not found'
 
-    return response.send({
+    return response.json({
       message: message,
       data: note
     })
@@ -86,7 +86,7 @@ class NoteController {
    */
   async update({ params, request, response }) {
     if (!request.all().hasOwnProperty('title')) {
-      return response.send({
+      return response.json({
         message: 'Title field is required'
       })
     }
@@ -95,7 +95,7 @@ class NoteController {
       note = await Note.find(id)
 
     if (!note) {
-      return response.send({
+      return response.json({
         message: 'data not found',
         data: note
       })
@@ -106,7 +106,7 @@ class NoteController {
     note.content = content
     note.save()
 
-    return response.send({
+    return response.json({
       message: 'data updated',
       data: note
     })
@@ -122,16 +122,15 @@ class NoteController {
    * @param {Response} ctx.response
    */
   async destroy({ params, request, response }) {
-    const { id } = params,
+    const { id } = request.all(),
       note = await Note.find(id)
-
     if (!note) {
-      return response.send({
+      return response.json({
         message: 'data not found',
       })
     }
-    await user.delete()
-    return request.send({
+    await note.delete()
+    return response.json({
       message: 'data deleted',
     })
   }
