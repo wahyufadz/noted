@@ -24,6 +24,14 @@ Factory.blueprint('App/Models/User', async (faker) => {
 
 class UserSeeder {
   async run() {
+    //default user
+    const u1 = new User()
+    u1.username = 'usersatu'
+    u1.email = 'u1@mail.com'
+    u1.password = await Hash.make('admin')
+    await u1.save()
+
+    //create 30 random user
     await Factory
       .model('App/Models/User')
       .createMany(30)

@@ -23,6 +23,7 @@ Factory.blueprint('App/Models/Note', async (faker) => {
 
 class NoteSeeder {
   async run() {
+    //create 300 random note
     await Factory
       .model('App/Models/Note')
       .createMany(300)
