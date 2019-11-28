@@ -22,9 +22,10 @@ Route.get('/', () => {
 
 Route.group(() => {
   Route.get('test', () => {
-    return { greeting: 'this is only a test' }// GET /api/v1/users
+    return { greeting: 'this is only a test' }
   })
 
   Route.resource('notes', 'NoteController')
+    .apiOnly()
 
 }).prefix('api/v1')
