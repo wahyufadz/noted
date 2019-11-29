@@ -24,8 +24,12 @@ Route.group(() => {
   Route.get('test', () => {
     return { greeting: 'this is only a test' }
   })
+
   Route.resource('notes', 'NoteController')
     .apiOnly()
+    .middleware('auth')
+
+  Route.post('/notes/page-search', 'NoteController.pageSearch')
     .middleware('auth')
 
   Route.post('/register', 'AuthController.register').prefix('auth')

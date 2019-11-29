@@ -1,5 +1,7 @@
 'use strict'
-const Note = use('App/Models/Note')
+const Note = use('App/Models/Note'),
+  Database = use('Database')
+
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -19,7 +21,7 @@ class NoteController {
    * @param {View} ctx.view
    */
   async index({ request, response, view }) {
-    response.json({
+    return response.json({
       data: await Note.all()
     })
   }
@@ -132,6 +134,24 @@ class NoteController {
     await note.delete()
     return response.json({
       message: 'data deleted',
+    })
+  }
+
+  /**
+   * get user note with pagination.
+   * POST notes/
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async pageSearch({ request, response }) {
+    let { page = 1, perPage = 10, orderBy = 'id', direction = 'asc' } = request.all()
+    return response.json({
+      data: await Database
+        .table('notes')
+        .orderBy(orderBy, direction)
+        .paginate(page, perPage)
     })
   }
 }
