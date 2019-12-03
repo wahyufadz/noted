@@ -35,6 +35,14 @@
     @apply bg-red-600
 }
 
+.btn {
+    @apply text-red-500
+}
+
+.badge {
+    @apply  inline-flex text-white font-thin text-xs rounded-full h-6 px-3 justify-center items-center
+}
+
 input {
     @apply border-solid border-2 rounded-full p-1 w-full;
 }
@@ -73,3 +81,4 @@ input[name='panel']:checked ~ .accordion__content {
     /* Get this as close to what height you expect */
     max-height: 50em;
 }
+

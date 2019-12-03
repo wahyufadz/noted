@@ -27,6 +27,57 @@
 
         <hr class="mb-8">
 
+        <div class="w-full">
+            <ul>
+                <li class="list-day">
+                    <input type="checkbox" class="accordion-btn" checked>
+                    <div class="flex">
+                        <div class="accordion-arrow">
+                            <svg width="1em" height="1em" fill="#000000" viewBox="0 0 100 100">
+                                <polygon points="11.7984725 19 49.9935275 57.3950291 88.1885825 19 99.987055 30.7984725 49.9935275 80.792 0 30.7984725"></polygon>
+                            </svg>
+                        </div>
+
+                        <h1>Today</h1>
+                    </div>
+                    <div class="accordion-body ml-8">
+                        <div v-for="list in lists" :key="list.id" class="flex mb-3">
+                            <div class="w-8/12">
+                                <div>
+                                    <input type="checkbox" class="form-checkbox">
+                                    <span class="ml-2">{{ list.content}}</span>
+
+                                </div>
+                            </div>
+                            <div class="w-4/12">
+                                <div class="flex text-right">
+                                    <div class="w-10/12">
+                                        <span class="badge bg-blue-400 mr-2">{{ list.id }}</span>
+                                        <span class="badge bg-pink-600 mr-2">{{ list.title }}</span>
+                                        <span class="font-thin text-xs text-gray-700">{{ list.updated_at }}</span>
+                                    </div>
+                                    <div class="w-2/12">
+                                        <button class="btn mr-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#00ccaa" viewBox="0 0 24 24">
+                                                <path d="M14.078 7.061l2.861 2.862-10.799 10.798-3.584.723.724-3.585 10.798-10.798zm0-2.829l-12.64 12.64-1.438 7.128 7.127-1.438 12.642-12.64-5.691-5.69zm7.105 4.277l2.817-2.82-5.691-5.689-2.816 2.817 5.69 5.692z"/>
+                                            </svg>
+                                        </button>
+                                        <button class="btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" viewBox="0 0 24 24">
+                                                <path d="M19 24h-14c-1.104 0-2-.896-2-2v-17h-1v-2h6v-1.5c0-.827.673-1.5 1.5-1.5h5c.825 0 1.5.671 1.5 1.5v1.5h6v2h-1v17c0 1.104-.896 2-2 2zm0-19h-14v16.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-16.5zm-9 4c0-.552-.448-1-1-1s-1 .448-1 1v9c0 .552.448 1 1 1s1-.448 1-1v-9zm6 0c0-.552-.448-1-1-1s-1 .448-1 1v9c0 .552.448 1 1 1s1-.448 1-1v-9zm-2-7h-4v1h4v-1z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+
         <div class="accordion">
         <!--  Panel 1  -->
             <section>
@@ -51,7 +102,7 @@
                         </div>
                     </div>
 
-                    <h2 class="accordion__header pt-4 pl-4">Header</h2>
+                    <h1 class="accordion__header pt-4 pl-4">Header</h1>
                     <p class="accordion__body p-4" id="panel1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto possimus at a cum saepe molestias modi illo facere ducimus voluptatibus praesentium deleniti fugiat ab error quia sit perspiciatis velit necessitatibus.Lorem ipsum dolor sit amet, consectetur
                         adipisicing elit. Lorem ipsum dolor sit amet.</p>
                 </div>
@@ -115,88 +166,6 @@
             </section>
         </div>
 
-        <section class="shadow">
-            <article class="border-b">
-                <div class="border-l-2 border-transparent">
-                    <header class="flex justify-between items-center p-5 pl-8 pr-8 cursor-pointer select-none">
-                        <span class="text-grey-darkest font-thin text-xl">
-                            Massa vitae tortor condimentum lacinia quis vel eros donec
-                        </span>
-                        <div class="rounded-full border border-grey w-7 h-7 flex items-center justify-center">
-                            <!-- icon by feathericons.com -->
-                            <svg aria-hidden="true" class="" data-reactid="266" fill="none" height="24" stroke="#606F7B" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                                <polyline points="6 9 12 15 18 9">
-                                </polyline>
-                            </svg>
-                        </div>
-                    </header>
-                </div>
-            </article>
-            <article class="border-b">
-                <div class="border-l-2 bg-grey-lightest border-indigo">
-                    <header class="flex justify-between items-center p-5 pl-8 pr-8 cursor-pointer select-none">
-                        <span class="text-indigo font-thin text-xl">
-                            Lorem ipsum dolor sit amet
-                        </span>
-                        <div class="rounded-full border border border-indigo w-7 h-7 flex items-center justify-center bg-indigo">
-                            <!-- icon by feathericons.com -->
-                            <svg aria-hidden="true" data-reactid="281" fill="none" height="24" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                                <polyline points="18 15 12 9 6 15">
-                                </polyline>
-                            </svg>
-                        </div>
-                    </header>
-                    <div>
-                        <div class="pl-8 pr-8 pb-5 text-grey-darkest">
-                            <ul class="pl-4">
-                                <li class="pb-2">
-                                    consectetur adipiscing elit
-                                </li>
-                                <li class="pb-2">
-                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-                                </li>
-                                <li class="pb-2">
-                                    Viverra orci sagittis eu volutpat odio facilisis mauris
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </article>
-            <article class="border-b">
-                <div class="border-l-2 border-transparent">
-                    <header class="flex justify-between items-center p-5 pl-8 pr-8 cursor-pointer select-none">
-                        <span class="text-grey-darkest font-thin text-xl">
-                            Lorem dolor sed viverra ipsum
-                        </span>
-                        <div class="rounded-full border border-grey w-7 h-7 flex items-center justify-center">
-                            <!-- icon by feathericons.com -->
-                            <svg aria-hidden="true" class="" data-reactid="266" fill="none" height="24" stroke="#606F7B" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                                <polyline points="6 9 12 15 18 9">
-                                </polyline>
-                            </svg>
-                        </div>
-                    </header>
-                </div>
-            </article>
-            <article class="border-b">
-                <div class="border-l-2 border-transparent">
-                    <header class="flex justify-between items-center p-5 pl-8 pr-8 cursor-pointer select-none">
-                        <span class="text-grey-darkest font-thin text-xl">
-                            Egestas sed tempus urna
-                        </span>
-                        <div class="rounded-full border border-grey w-7 h-7 flex items-center justify-center">
-                            <!-- icon by feathericons.com -->
-                            <svg aria-hidden="true" class="" data-reactid="266" fill="none" height="24" stroke="#606F7B" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                                <polyline points="6 9 12 15 18 9">
-                                </polyline>
-                            </svg>
-                        </div>
-                    </header>
-                </div>
-            </article>
-        </section>
-
         <!-- <ol>
             <li v-for="list in lists" :key="list.id">
                 <p>{{ list.content }}</p>
@@ -207,11 +176,16 @@
 </template>
 
 <script>
-
 import axios from "axios"
+// import Trash from './components/Trash.vue'
+
+const baseURL = `https://api.fadzarwahyu.net/api/v1/notes`
 
 export default {
   name: 'HelloWorld',
+//   components:
+    // Trash
+//   ,
   data() {
     return {
       lists: [],
@@ -225,9 +199,9 @@ export default {
   },
   methods: {
     load() {
-      axios.get(`https://api.fadzarwahyu.net/api/v1/notes`)
+      axios.get(baseURL)
         .then(response => {
-          this.lists = response.data
+          this.lists = response.data.data
         })
         .catch(e => {
           this.errors.push(e)
@@ -236,3 +210,28 @@ export default {
   }
 }
 </script>
+
+<style  scoped>
+
+.accordion-btn {
+  position: absolute;
+  cursor: pointer;
+  width: 60%;
+  height: 35px;
+  z-index: 1;
+  opacity: 0;
+  /* margin-top: 22px; */
+}
+
+.accordion-btn[type=checkbox]:checked ~ .accordion-body {
+  margin-top: 0;
+  max-height: 0;
+  opacity: 0;
+  /* tras */
+}
+
+ul li input[type=checkbox]:checked ~ .accordion-arrow {
+  transform: rotate(180deg);
+  /* tras */
+}
+</style>
