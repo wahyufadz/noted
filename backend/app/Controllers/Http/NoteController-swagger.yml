@@ -7,6 +7,10 @@
     operationId: "getAllNotes"
     produces:
       - "application/json"
+    responses:
+      200:
+        description: "successful operation"
+
   post:
     tags:
       - "note"
@@ -28,8 +32,11 @@
         description: "Content of the note"
         required: false
         type: "string"
+    responses:
+      200:
+        description: "successful operation"
 
-/notes/{noteId}:
+/notes/{id}:
   get:
     tags:
       - "note"
@@ -39,12 +46,16 @@
     produces:
       - "application/json"
     parameters:
-      - name: "noteId"
+      - name: "id"
         in: "path"
         description: "ID of note to return"
         required: true
         type: "integer"
         format: "int64"
+    responses:
+      200:
+        description: "successful operation"
+
   patch:
     tags:
       - "note"
@@ -56,7 +67,7 @@
     produces:
       - "application/json"
     parameters:
-      - name: "noteId"
+      - name: "id"
         in: "path"
         description: "ID of note that needs to be updated"
         required: true
@@ -72,6 +83,10 @@
         description: "Updated content of the note"
         required: false
         type: "string"
+    responses:
+      200:
+        description: "successful operation"
+
   delete:
     tags:
       - "note"
@@ -81,9 +96,12 @@
     produces:
       - "application/json"
     parameters:
-      - name: "noteId"
+      - name: "id"
         in: "path"
         description: "Note id to delete"
         required: true
         type: "integer"
         format: "int64"
+    responses:
+      200:
+        description: "successful operation"

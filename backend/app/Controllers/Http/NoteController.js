@@ -20,9 +20,12 @@ class NoteController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {
+  async index({ request, response, auth }) {
     return response.json({
-      data: await Note.all()
+      data: await Note
+        .query()
+        .where('user_id', auth.user.id)
+        .fetch()
     })
   }
 
@@ -37,7 +40,9 @@ class NoteController {
   async store({ request, response }) {
     if (!request.all().hasOwnProperty('title')) {
       return response.json({
-        message: 'Title field is required'
+        error: {
+          message: 'Title field is required'
+        }
       })
     }
 
@@ -51,8 +56,10 @@ class NoteController {
     await newNote.save()
 
     return response.json({
-      message: 'data saved',
-      data: newNote
+      data: {
+        newNote,
+        message: 'data saved'
+      }
     })
 
   }
@@ -66,16 +73,27 @@ class NoteController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {
+  async show({ params, request, response, auth }) {
     const { id } = params,
-      note = await Note.find(id),
-      message = note ? 'data found' : 'data not found'
-
-    return response.json({
-      message: message,
-      data: note
-    })
-
+      note = await Note
+        .query()
+        .where('id', id)
+        .where('user_id', auth.user.id)
+        .fetch(),
+    if (note.length) {
+      return response.json({
+        data: {
+          note,
+          message: 'data found',
+        }
+      })
+    } else {
+      return response.json({
+        error: {
+          message: 'data not found',
+        }
+      })
+    }
   }
 
   /**
@@ -86,20 +104,24 @@ class NoteController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {
+  async update({ params, request, response, auth }) {
     if (!request.all().hasOwnProperty('title')) {
       return response.json({
-        message: 'Title field is required'
+        error: { message: 'Title field is required' }
       })
     }
 
     const { id } = params,
-      note = await Note.find(id)
+      note = await Note
+        .find(id)
 
     if (!note) {
       return response.json({
-        message: 'data not found',
-        data: note
+        error: { message: 'data not found' }
+      })
+    } else if (note.user_id !== auth.user.id) {
+      return response.json({
+        error: { message: 'data not owned by user' }
       })
     }
 
@@ -109,8 +131,10 @@ class NoteController {
     note.save()
 
     return response.json({
-      message: 'data updated',
-      data: note
+      data: {
+        note,
+        message: 'data updated',
+      }
     })
 
   }
@@ -124,16 +148,22 @@ class NoteController {
    * @param {Response} ctx.response
    */
   async destroy({ params, request, response }) {
-    const { id } = request.all(),
+    const { id } = params.all(),
       note = await Note.find(id)
+
     if (!note) {
       return response.json({
-        message: 'data not found',
+        error: { message: 'data not found' }
+      })
+    } else if (note.user_id !== auth.user.id) {
+      return response.json({
+        error: { message: 'data not owned by user' }
       })
     }
+
     await note.delete()
     return response.json({
-      message: 'data deleted',
+      data: { message: 'data deleted' }
     })
   }
 
@@ -145,11 +175,12 @@ class NoteController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async pageSearch({ request, response }) {
-    let { page = 1, perPage = 10, orderBy = 'id', direction = 'asc' } = request.all()
+  async pageSearch({ request, response, auth }) {
+    let { page = 1, perPage = 5, orderBy = 'id', direction = 'asc' } = request.all()
     return response.json({
       data: await Database
         .table('notes')
+        .where('user_id', auth.user.id)
         .orderBy(orderBy, direction)
         .paginate(page, perPage)
     })
