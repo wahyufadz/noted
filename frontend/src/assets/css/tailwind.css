@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+
+.btn-primary {
+    @apply px-5 py-2 bg-teal-400 text-white rounded;
+}
+.btn-primary:hover {
+    @apply bg-teal-500;
+}
+.btn-primary:active {
+    @apply bg-teal-600;
+}
+
+.btn-submit {
+    @apply px-5 py-2 bg-blue-400 text-white rounded;
+}
+.btn-submit:hover {
+    @apply bg-blue-500;
+}
+.btn-submit:active {
+    @apply bg-blue-600;
+}
+
+.btn-disabled {
+    @apply px-5 py-2 text-gray-600 border-solid border-2 rounded cursor-not-allowed;
+}
+
+.btn-delete {
+    @apply px-5 py-2 text-white rounded bg-red-400;
+}
+.btn-delete:hover {
+    @apply bg-red-500
+}
+.btn-delete:active {
+    @apply bg-red-600
+}
+
+.btn {
+    @apply text-red-500
+}
+
+.badge {
+    @apply  inline-flex text-white font-thin text-xs rounded-full h-6 px-3 justify-center items-center
+}
+
+input {
+    @apply border-solid border-2 rounded-full p-1 w-full;
+}
+
+@tailwind utilities;
+
+h1 {
+    @apply text-2xl;
+}
+h2 {
+    @apply text-xl;
+}
+h3 {
+    @apply text-lg;
+}
+
+button:focus {outline:0;}
+
+label:before {
+    content: 'v';
+    transform: rotateX(45deg);
+    right: 1em;
+    color: #555;
+}
+
+input:checked + label:before {
+    content: "-";
+    line-height: .8em;
+}
+
+.accordion__content{
+    max-height: 0em;
+    transition: all 0.4s cubic-bezier(0.865, 0.14, 0.095, 0.87);
+}
+input[name='panel']:checked ~ .accordion__content {
+    /* Get this as close to what height you expect */
+    max-height: 50em;
+}
+
