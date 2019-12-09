@@ -27,7 +27,8 @@ module.exports = {
           "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         }
       },
-      "host": "api.fadzarwahyu.net",
+      // "host": "api.fadzarwahyu.net",
+      "host": "127.0.0.1:3333",
       "basePath": "/api/v1",
       "tags": [
         {
@@ -40,6 +41,13 @@ module.exports = {
         }
       ],
 
+      "securityDefinitions": {
+        "Bearer": {
+          "type": "apiKey",
+          "name": "Authorization",
+          "in": "header"
+        }
+      }
       // Example security definitions.
       // securityDefinitions: {
       //   ApiKey: {

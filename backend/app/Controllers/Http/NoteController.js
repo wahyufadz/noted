@@ -1,5 +1,6 @@
 'use strict'
-const Note = use('App/Models/Note'),
+const
+  Note = use('App/Models/Note'),
   Database = use('Database')
 
 
@@ -73,13 +74,15 @@ class NoteController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, auth }) {
-    const { id } = params,
+  async show({ params, response, auth }) {
+    const
+      { id } = params,
       note = await Note
         .query()
         .where('id', id)
         .where('user_id', auth.user.id)
-        .fetch(),
+        .fetch()
+
     if (note.length) {
       return response.json({
         data: {
@@ -111,7 +114,8 @@ class NoteController {
       })
     }
 
-    const { id } = params,
+    const
+      { id } = params,
       note = await Note
         .find(id)
 
@@ -147,8 +151,9 @@ class NoteController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {
-    const { id } = params.all(),
+  async destroy({ params, response }) {
+    const
+      { id } = params.all(),
       note = await Note.find(id)
 
     if (!note) {
