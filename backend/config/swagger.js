@@ -27,19 +27,27 @@ module.exports = {
           "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         }
       },
-      "host": "api.fadzarwahyu.net",
+      // "host": "api.fadzarwahyu.net",
+      "host": "127.0.0.1:3333",
       "basePath": "/api/v1",
       "tags": [
         {
+          "name": "auth",
+          "description": "Authentication for user"
+        },
+        {
           "name": "note",
-          "description": "Everything about your Note",
-          "externalDocs": {
-            "description": "Find out more",
-            "url": "http://swagger.io"
-          }
+          "description": "Everything about your Note"
         }
       ],
 
+      "securityDefinitions": {
+        "Bearer": {
+          "type": "apiKey",
+          "name": "Authorization",
+          "in": "header"
+        }
+      }
       // Example security definitions.
       // securityDefinitions: {
       //   ApiKey: {

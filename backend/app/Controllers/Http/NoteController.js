@@ -1,5 +1,8 @@
 'use strict'
-const Note = use('App/Models/Note')
+const
+  Note = use('App/Models/Note'),
+  Database = use('Database')
+
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -18,9 +21,12 @@ class NoteController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {
-    response.send({
-      data: await Note.all()
+  async index({ request, response, auth }) {
+    return response.json({
+      data: await Note
+        .query()
+        .where('user_id', auth.user.id)
+        .fetch()
     })
   }
 
@@ -34,8 +40,10 @@ class NoteController {
    */
   async store({ request, response }) {
     if (!request.all().hasOwnProperty('title')) {
-      return response.send({
-        message: 'Title field is required'
+      return response.json({
+        error: {
+          message: 'Title field is required'
+        }
       })
     }
 
@@ -48,9 +56,11 @@ class NoteController {
 
     await newNote.save()
 
-    return response.send({
-      message: 'data saved',
-      data: newNote
+    return response.json({
+      data: {
+        newNote,
+        message: 'data saved'
+      }
     })
 
   }
@@ -64,16 +74,29 @@ class NoteController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {
-    const { id } = params,
-      note = await Note.find(id),
-      message = note ? 'data found' : 'data not found'
+  async show({ params, response, auth }) {
+    const
+      { id } = params,
+      note = await Note
+        .query()
+        .where('id', id)
+        .where('user_id', auth.user.id)
+        .fetch()
 
-    return response.send({
-      message: message,
-      data: note
-    })
-
+    if (note.length) {
+      return response.json({
+        data: {
+          note,
+          message: 'data found',
+        }
+      })
+    } else {
+      return response.json({
+        error: {
+          message: 'data not found',
+        }
+      })
+    }
   }
 
   /**
@@ -84,20 +107,25 @@ class NoteController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {
+  async update({ params, request, response, auth }) {
     if (!request.all().hasOwnProperty('title')) {
-      return response.send({
-        message: 'Title field is required'
+      return response.json({
+        error: { message: 'Title field is required' }
       })
     }
 
-    const { id } = params,
-      note = await Note.find(id)
+    const
+      { id } = params,
+      note = await Note
+        .find(id)
 
     if (!note) {
-      return response.send({
-        message: 'data not found',
-        data: note
+      return response.json({
+        error: { message: 'data not found' }
+      })
+    } else if (note.user_id !== auth.user.id) {
+      return response.json({
+        error: { message: 'data not owned by user' }
       })
     }
 
@@ -106,9 +134,11 @@ class NoteController {
     note.content = content
     note.save()
 
-    return response.send({
-      message: 'data updated',
-      data: note
+    return response.json({
+      data: {
+        note,
+        message: 'data updated',
+      }
     })
 
   }
@@ -121,18 +151,43 @@ class NoteController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {
-    const { id } = params,
+  async destroy({ params, response }) {
+    const
+      { id } = params.all(),
       note = await Note.find(id)
 
     if (!note) {
-      return response.send({
-        message: 'data not found',
+      return response.json({
+        error: { message: 'data not found' }
+      })
+    } else if (note.user_id !== auth.user.id) {
+      return response.json({
+        error: { message: 'data not owned by user' }
       })
     }
-    await user.delete()
-    return request.send({
-      message: 'data deleted',
+
+    await note.delete()
+    return response.json({
+      data: { message: 'data deleted' }
+    })
+  }
+
+  /**
+   * get user note with pagination.
+   * POST notes/
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async pageSearch({ request, response, auth }) {
+    let { page = 1, perPage = 5, orderBy = 'id', direction = 'asc' } = request.all()
+    return response.json({
+      data: await Database
+        .table('notes')
+        .where('user_id', auth.user.id)
+        .orderBy(orderBy, direction)
+        .paginate(page, perPage)
     })
   }
 }

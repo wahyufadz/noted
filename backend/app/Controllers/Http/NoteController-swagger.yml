@@ -1,32 +1,21 @@
 /notes:
   get:
+    security:
+      - Bearer: []
     tags:
       - "note"
     summary: "List of all notes"
     description: "Returns all notes"
-    # operationId: "getNoteById"
+    operationId: "getAllNotes"
     produces:
-      - "application/xml"
       - "application/json"
-    # parameters:
-    # - name: "noteId"
-    #   in: "path"
-    #   description: "ID of note to return"
-    #   required: true
-    #   type: "integer"
-    #   format: "int64"
     responses:
       200:
         description: "successful operation"
-        # schema:
-        # $ref: "#/definitions/Note"
-      400:
-        description: "Invalid ID supplied"
-      404:
-        description: "Note not found"
-    # security:
-    # - api_key: []
+
   post:
+    security:
+      - Bearer: []
     tags:
       - "note"
     summary: "Create a note in the store with form data"
@@ -35,7 +24,6 @@
     consumes:
       - "application/x-www-form-urlencoded"
     produces:
-      - "application/xml"
       - "application/json"
     parameters:
       - name: "title"
@@ -49,25 +37,22 @@
         required: false
         type: "string"
     responses:
-      405:
-        description: "Invalid input"
-    # security:
-    # - petstore_auth:
-    #   - "write:notes"
-    #   - "read:notes"
+      200:
+        description: "successful operation"
 
-/notes/{noteId}:
+/notes/{id}:
   get:
+    security:
+      - Bearer: []
     tags:
       - "note"
     summary: "Find note by ID"
     description: "Returns a single note"
     operationId: "getNoteById"
     produces:
-      - "application/xml"
       - "application/json"
     parameters:
-      - name: "noteId"
+      - name: "id"
         in: "path"
         description: "ID of note to return"
         required: true
@@ -76,15 +61,10 @@
     responses:
       200:
         description: "successful operation"
-        # schema:
-        # $ref: "#/definitions/Note"
-      400:
-        description: "Invalid ID supplied"
-      404:
-        description: "Note not found"
-    # security:
-    # - api_key: []
+
   patch:
+    security:
+      - Bearer: []
     tags:
       - "note"
     summary: "Updates a note in the store with form data"
@@ -93,58 +73,45 @@
     consumes:
       - "application/x-www-form-urlencoded"
     produces:
-      - "application/xml"
       - "application/json"
     parameters:
-      - name: "noteId"
+      - name: "id"
         in: "path"
         description: "ID of note that needs to be updated"
         required: true
         type: "integer"
         format: "int64"
-      - name: "name"
+      - name: "title"
         in: "formData"
-        description: "Updated name of the note"
+        description: "Updated title of the note"
         required: false
         type: "string"
-      - name: "status"
+      - name: "content"
         in: "formData"
-        description: "Updated status of the note"
+        description: "Updated content of the note"
         required: false
         type: "string"
     responses:
-      405:
-        description: "Invalid input"
-    # security:
-    # - petstore_auth:
-    #   - "write:notes"
-    #   - "read:notes"
+      200:
+        description: "successful operation"
+
   delete:
+    security:
+      - Bearer: []
     tags:
       - "note"
     summary: "Deletes a note"
     description: ""
     operationId: "deleteNote"
     produces:
-      - "application/xml"
       - "application/json"
     parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "noteId"
+      - name: "id"
         in: "path"
         description: "Note id to delete"
         required: true
         type: "integer"
         format: "int64"
     responses:
-      400:
-        description: "Invalid ID supplied"
-      404:
-        description: "Note not found"
-    # security:
-    # - notestore_auth:
-    #   - "write:notes"
-    #   - "read:notes"
+      200:
+        description: "successful operation"

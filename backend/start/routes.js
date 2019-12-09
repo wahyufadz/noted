@@ -17,7 +17,7 @@
 const Route = use('Route')
 
 Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
+  return { greeting: 'Hello this is noted app API' }
 })
 
 Route.group(() => {
@@ -27,5 +27,17 @@ Route.group(() => {
 
   Route.resource('notes', 'NoteController')
     .apiOnly()
+    .middleware('auth')
+
+  Route.post('/notes/page-search', 'NoteController.pageSearch')
+    .middleware('auth')
+
+  Route.post('/register', 'AuthController.register').prefix('auth')
+  Route.post('/login', 'AuthController.login').prefix('auth')
+  Route.post('/logout', 'AuthController.logout').prefix('auth')
+  Route.post('/check-email-username', 'AuthController.checkEmailUsername').prefix('auth')
+
+  Route.post('/refresh', 'AuthController.refresh').prefix('auth')
+
 
 }).prefix('api/v1')
