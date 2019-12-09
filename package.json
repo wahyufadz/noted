@@ -4,9 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "nodemon backend/server.js",
-        "start": "node backend/server.js"
+        "start": "npx concurrently --kill-others \"npx nodemon backend/server.js\" \"cd frontend && npx vue-cli-service serve\"",
+        "install-all": "npm install && cd backend && npm install && cd ../frontend && yarn install"
     },
     "repository": {
         "type": "git",
@@ -18,8 +17,10 @@
         "url": "https://github.com/wahyufadz/noted/issues"
     },
     "homepage": "https://github.com/wahyufadz/noted#readme",
-    "dependencies": {
-        "@adonisjs/cli": "^4.0.12",
-        "mysql": "^2.17.1"
+    "dependencies": {},
+    "devDependencies": {
+        "concurrently": "^5.0.0",
+        "nodemon": "^2.0.1",
+        "vue-cli": "^2.9.6"
     }
 }
